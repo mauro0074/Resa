@@ -5,7 +5,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::all();
-        return response()->json(['data'=>$usuarios],200);
+       return $this->showAll($compradores);
        // return ['data'=>$usuarios];
     }
 
@@ -37,7 +37,7 @@ class UserController extends Controller
         $campos['verification_token'] = User::generarVerificationToken();
         $campos['admin'] = User::USUARIO_REGULAR;
         $usuario = User::create($campos);
-        return response()->json(['data' => $usuario],201);
+        return $this->showOne($usuario, 201);
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
     public function show($id)
     {
        $usuario =  User::findorFail($id);
-         return response()->json(['data'=> $usuario],200);
+         return $this->showOne($usuario);
     }
 
     /**
@@ -114,7 +114,7 @@ class UserController extends Controller
         }
             
         $user->save();  
-        return response()->json(['data'=> $user],200);
+       return $this->showOne($user);
         
 
     }
@@ -129,7 +129,6 @@ class UserController extends Controller
     {
         $user = User::findorFail($id);
         $user->delete();
-        return response()->json(['data'=> $user], 200);
-
+        return $this->showOne($user);
     }
 }

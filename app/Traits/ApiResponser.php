@@ -2,10 +2,12 @@
 //los traits se pueden poner en cualquier carpeta pero lo pondremos en su propio folder
 //
 namespace App\Traits;
-trait ApiResponse
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+trait ApiResponser
 {
 	//devolvera respuestas positivas
-	private function succesResponse($data, $code)
+	private function successResponse($data, $code)
 	{
 		return response()->json($data, $code);
 	}
@@ -23,7 +25,7 @@ trait ApiResponse
 	//Muestra una instancias ,un usuarios o elementos, si no se recibe un codigo se asumira que su variable es 200 recibe objeto simple
 	protected function ShowOne(Model $instance, $code = 200)
 	{
-		return $this->successResponse(['data' => $collection], $code);
+		return $this->successResponse(['data' => $instance], $code);
 	}
 }
 ?>

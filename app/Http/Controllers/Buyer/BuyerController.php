@@ -15,14 +15,14 @@ class BuyerController extends ApiController
     public function index()
     {
         $compradores = Buyer::has('transactions')->get();
-        return response()->json(['data' => $compradores], 200);
+        return $this->showAll($compradores);
     }
 
    
     public function show($id)
     {
-      $compradores = Buyer::has('transactions')->findorFail($id);
-        return response()->json(['data' => $compradores], 200);
+      $comprador = Buyer::has('transactions')->findorFail($id);
+        return $this->showOne($comprador);
     }
 
     /**
