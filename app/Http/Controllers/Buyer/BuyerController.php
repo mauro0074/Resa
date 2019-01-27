@@ -17,12 +17,12 @@ class BuyerController extends ApiController
         $compradores = Buyer::has('transactions')->get();
         return $this->showAll($compradores);
     }
-
+//Global Scoope .- ahi se pueden hacer consultas sobre el modelo
    
-    public function show($id)
+    public function show(Buyer $buyer)
     {
-      $comprador = Buyer::has('transactions')->findorFail($id);
-        return $this->showOne($comprador);
+      //$comprador = Buyer::has('transactions')->findorFail($id);
+        return $this->showOne($buyer);
     }
 
     /**

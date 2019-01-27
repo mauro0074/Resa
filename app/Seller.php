@@ -1,13 +1,19 @@
 <?php
 
 namespace App;
-use App\User;
-use App\Seller;
+//use App\User;
+use App\Product;
+//use App\Seller;
+use App\Scopes\SellerScope;
 class Seller extends User
 {
-	
+	protected static function boot()
+	{
+		parent::boot();
+		static::addGlobalScope(new SellerScope);
+	}
      public function products()
     {
-    	return $this->hasMany(Products::class);
+    	return $this->hasMany(Product::class);
     }
 }
