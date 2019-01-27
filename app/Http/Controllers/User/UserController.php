@@ -15,7 +15,7 @@ class UserController extends ApiController
     public function index()
     {
         $usuarios = User::all();
-       return $this->showAll($compradores);
+       return $this->showAll($usuarios);
        // return ['data'=>$usuarios];
     }
 
@@ -101,7 +101,7 @@ class UserController extends ApiController
             if (!$user->esVerificado()) 
             { 
                 //error 409 es de conflicto con peticion
-                return response()->json(['error'=>'Solo los usuarios verificados pueden cambiar su valor','code' => 409], 409);
+                return $this->errorResponse('Solo los usuarios verificados pueden cambiar su valor', 409);
                // $user->verification_token = User::generarVerificationToken();
             }
             $user->admin = $request->admin;
@@ -110,7 +110,7 @@ class UserController extends ApiController
         //en esta parte con dirty verificamos si ha cambiado algun dato de user
         if (!$user->isDirty())
         {
-            return response()->json(['error'=>'Se debe especificar valor diferente','code' => 422], 422);
+            return $this->errorResponse('Se debe teclear por lo menos un valor diferente, para actualizar', 422);
         }
             
         $user->save();  
